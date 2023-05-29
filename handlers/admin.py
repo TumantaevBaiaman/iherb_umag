@@ -5,6 +5,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters.state import StatesGroup
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
+from config import AUTHORIZED_USER_ID
 from create_bot import dp, bot
 from aiogram.dispatcher.filters import Text
 from key.buttons import menu_info
@@ -19,8 +20,11 @@ class FSMAdmin(StatesGroup):
 
 
 async def cm_start(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Загрузите файл')
-    await FSMAdmin.file.set()
+    if str(message.from_user.id) in AUTHORIZED_USER_ID:
+        await bot.send_message(message.from_user.id, 'Загрузите файл')
+        await FSMAdmin.file.set()
+    else:
+        await bot.send_message(chat_id=message.from_user.id, text="Sorry, you are not authorized to use this bot.")
 
 
 async def load_file(message: types.Message, state: FSMAdmin):
