@@ -23,5 +23,5 @@ def gsheet2df(spreadsheet_name, sheet_num):
 def barcode():
     name = "products_export_1683261364555"
     data_sheets = gsheet2df(name, 0)
-    new = {i["Название"].upper(): i["ШТРИХКОД"] for i in data_sheets}
+    new = {i["Название"].upper().replace("\xa0", " "): i["ШТРИХКОД"] for i in data_sheets}
     return new

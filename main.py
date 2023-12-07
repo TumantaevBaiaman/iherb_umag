@@ -14,8 +14,10 @@ def new_date():
     sheets_data = barcode()
 
     for i in list_df:
-        i.append(sheets_data[str(i[1][:-10]).upper()] if str(i[1][:-10]).upper() in sheets_data else None)
+        i.append(sheets_data[str(i[1][:-10]).upper().replace("\xa0", " ")] if str(i[1][:-10]).upper().replace("\xa0", " ") in sheets_data else None)
         i[1] = str(i[1][:-10])
+    
+    print(list_df)
 
     return list_df
 
